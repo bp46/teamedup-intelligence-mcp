@@ -1,6 +1,9 @@
 {
   "name": "@teamedup/intelligence-mcp",
-  "version": "1.1.0",
+  "version": "1.1.2",
+  "bin": {
+    "teamedup-intelligence-mcp": "./bin/mcp-stdio.js"
+  },
   "description": "Official MCP server configuration, tool reference, OpenAPI 3.0.3 spec, and SDK examples for TeamedUp Intelligence (China & APAC salary benchmarks, statutory cost 五险一金, and labor market data).",
   "license": "MIT",
   "homepage": "https://intelligence.teamedupchina.com/docs/mcp",
@@ -9,6 +12,7 @@
     "url": "https://github.com/bp46/teamedup-intelligence-mcp.git"
   },
   "files": [
+    "bin/",
     "README.md",
     "server.json",
     "smithery.yaml",
