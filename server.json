@@ -1,6 +1,6 @@
 {
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-10-17/server.schema.json",
-  "name": "com.teamedupchina/intelligence-mcp",
+  "name": "io.github.bp46/teamedup-intelligence-mcp",
   "title": "TeamedUp Intelligence — China & APAC Salary Data",
   "description": "China & APAC compensation benchmarks (P25/P50/P75/P90), China statutory employer cost (Wuxian Yijin / 五险一金), cross-city arbitrage, and employer intelligence across 319,000+ verified postings.",
   "version": "1.1.0",
