@@ -5,6 +5,7 @@
 [![Protocol: MCP 2024-11-05](https://img.shields.io/badge/MCP-2024--11--05-0F766E.svg)](https://modelcontextprotocol.io)
 [![Transport: Streamable HTTP](https://img.shields.io/badge/Transport-Streamable%20HTTP-0F766E.svg)](https://intelligence.teamedupchina.com/docs/mcp)
 [![OpenAPI 3.0.3](https://img.shields.io/badge/OpenAPI-3.0.3-blue.svg)](./openapi.yaml)
+[![Glama MCP connector](https://glama.ai/mcp/connectors/io.github.bp46/teamedup-intelligence-mcp/badges/score.svg)](https://glama.ai/mcp/connectors/io.github.bp46/teamedup-intelligence-mcp)
 [![License: MIT](https://img.shields.io/badge/License-MIT-slate.svg)](./package.json)
 
 Official Model Context Protocol (MCP) server configuration, tool reference, OpenAPI 3.0.3 specification, and SDK examples for **[TeamedUp Intelligence](https://intelligence.teamedupchina.com)** — institutional-grade labor market and compensation intelligence across Mainland China, Greater China (HK, TW, MO), and International APAC (SG, AU, JP, KR, SEA).
