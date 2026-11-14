@@ -1,0 +1,1557 @@
+{
+    "openapi": "3.0.3",
+    "info": {
+        "title": "TeamedUp Intelligence API",
+        "description": "Headless data application and API gateway designed to ingest, normalize, and serve Chinese labor market data (salary bands, company firmographics, skill demand) to enterprise compliance, HR, and investment teams.\n",
+        "version": "2.0.0"
+    },
+    "servers": [
+        {
+            "url": "https://intelligence.teamedupchina.com",
+            "description": "Production Server"
+        }
+    ],
+    "components": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "Sanctum"
+            }
+        },
+        "schemas": {
+            "MarketSummary": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "public_ulid": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "standardized_role": {
+                        "type": "string"
+                    },
+                    "city": {
+                        "type": "string"
+                    },
+                    "calculated_month": {
+                        "type": "string",
+                        "example": "2026-07"
+                    },
+                    "seniority_level": {
+                        "type": "string"
+                    },
+                    "education_level": {
+                        "type": "string"
+                    },
+                    "industry": {
+                        "type": "string"
+                    },
+                    "macro_industry": {
+                        "type": "string"
+                    },
+                    "company_size_tier": {
+                        "type": "string"
+                    },
+                    "data_point_count": {
+                        "type": "integer"
+                    },
+                    "p25_salary": {
+                        "type": "integer"
+                    },
+                    "p50_salary": {
+                        "type": "integer"
+                    },
+                    "p75_salary": {
+                        "type": "integer"
+                    },
+                    "p90_salary": {
+                        "type": "integer"
+                    },
+                    "confidence_level": {
+                        "type": "string",
+                        "enum": [
+                            "Low",
+                            "Medium",
+                            "High"
+                        ]
+                    }
+                }
+            },
+            "Company": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "public_ulid": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "name_en": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "name_cn": {
+                        "type": "string"
+                    },
+                    "industry_standardized": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "macro_industry": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "size_tier": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "ownership_type": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "headquarters_city": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "established_years": {
+                        "type": "integer",
+                        "nullable": true
+                    },
+                    "financing_status": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "website_url": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "business_tags": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "nullable": true
+                    }
+                }
+            },
+            "SalaryDatapoint": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "public_ulid": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "company_id": {
+                        "type": "integer"
+                    },
+                    "standardized_role": {
+                        "type": "string"
+                    },
+                    "original_title_cn": {
+                        "type": "string",
+                        "description": "Original raw advertised job title in Chinese before standardization",
+                        "nullable": true
+                    },
+                    "city": {
+                        "type": "string"
+                    },
+                    "source_platform": {
+                        "type": "string",
+                        "description": "Originating recruitment channel or verified ATS feed (e.g., Liepin, Zhaopin, Direct ATS)",
+                        "nullable": true
+                    },
+                    "source_record_id": {
+                        "type": "string",
+                        "description": "Auditable source-level unique requisition identifier",
+                        "nullable": true
+                    },
+                    "min_monthly_salary_cny": {
+                        "type": "integer",
+                        "nullable": true
+                    },
+                    "max_monthly_salary_cny": {
+                        "type": "integer",
+                        "nullable": true
+                    },
+                    "salary_type": {
+                        "type": "string",
+                        "enum": ["monthly_base", "annual_package", "hourly_contract"],
+                        "default": "monthly_base"
+                    },
+                    "months_per_year": {
+                        "type": "integer"
+                    },
+                    "calculated_annual_cny": {
+                        "type": "integer",
+                        "nullable": true
+                    },
+                    "seniority_level": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "education_level": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "employment_type": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "equity_offered": {
+                        "type": "boolean"
+                    },
+                    "posted_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "nullable": true
+                    },
+                    "first_seen_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "nullable": true
+                    },
+                    "last_seen_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "nullable": true
+                    },
+                    "verification_flags": {
+                        "type": "object",
+                        "description": "4-tier institutional data verification audit status",
+                        "properties": {
+                            "source_verified": {
+                                "type": "boolean",
+                                "description": "Listing originates from a licensed recruitment network or authenticated ATS feed"
+                            },
+                            "employer_verified": {
+                                "type": "boolean",
+                                "description": "Hiring entity cross-referenced against official Chinese enterprise registration (USCC)"
+                            },
+                            "salary_verified": {
+                                "type": "boolean",
+                                "description": "Compensation range mathematically validated and bounded within 1.5x IQR cohort limits"
+                            },
+                            "deduplication_verified": {
+                                "type": "boolean",
+                                "description": "Passed 30-day deterministic cross-platform composite fingerprinting"
+                            }
+                        }
+                    }
+                }
+            },
+            "SkillDemand": {
+                "type": "object",
+                "properties": {
+                    "skill_id": {
+                        "type": "integer"
+                    },
+                    "name_en": {
+                        "type": "string"
+                    },
+                    "name_cn": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "category": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "posting_count": {
+                        "type": "integer"
+                    },
+                    "avg_midpoint_salary_cny": {
+                        "type": "integer"
+                    },
+                    "median_salary_cny": {
+                        "type": "integer"
+                    }
+                }
+            },
+            "DatasetTrend": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "company_id": {
+                        "type": "integer"
+                    },
+                    "standardized_role": {
+                        "type": "string"
+                    },
+                    "city": {
+                        "type": "string"
+                    },
+                    "ingestion_share_percentage": {
+                        "type": "number"
+                    },
+                    "dataset_frequency_score": {
+                        "type": "number"
+                    },
+                    "calculated_week": {
+                        "type": "string",
+                        "example": "2026-31"
+                    }
+                }
+            },
+            "Stats": {
+                "type": "object",
+                "properties": {
+                    "datapoints": {
+                        "type": "integer"
+                    },
+                    "companies": {
+                        "type": "integer"
+                    },
+                    "distinct_roles": {
+                        "type": "integer"
+                    },
+                    "distinct_cities": {
+                        "type": "integer"
+                    },
+                    "skills": {
+                        "type": "integer"
+                    },
+                    "market_summaries": {
+                        "type": "integer"
+                    },
+                    "calculated_months": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "ErrorQuotaExceeded": {
+                "type": "object",
+                "properties": {
+                    "error": {
+                        "type": "string",
+                        "example": "Quota Exceeded"
+                    },
+                    "message": {
+                        "type": "string",
+                        "example": "You have exceeded your monthly API quota."
+                    }
+                }
+            },
+            "ErrorForbidden": {
+                "type": "object",
+                "properties": {
+                    "error": {
+                        "type": "string",
+                        "example": "Forbidden"
+                    },
+                    "message": {
+                        "type": "string"
+                    }
+                }
+            },
+            "ErrorValidation": {
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "type": "string"
+                    },
+                    "errors": {
+                        "type": "object"
+                    }
+                }
+            }
+        }
+    },
+    "security": [
+        {
+            "bearerAuth": []
+        }
+    ],
+    "paths": {
+        "/api/v1/user": {
+            "get": {
+                "summary": "Get authenticated user",
+                "tags": [
+                    "User"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User profile",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer"
+                                        },
+                                        "name": {
+                                            "type": "string"
+                                        },
+                                        "email": {
+                                            "type": "string"
+                                        },
+                                        "monthly_api_quota": {
+                                            "type": "integer"
+                                        },
+                                        "credits_used_this_month": {
+                                            "type": "integer"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                }
+            }
+        },
+        "/api/v1/stats": {
+            "get": {
+                "summary": "Get dataset statistics",
+                "tags": [
+                    "Stats"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Dataset stats",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "meta": {
+                                            "type": "object"
+                                        },
+                                        "data": {
+                                            "$ref": "#/components/schemas/Stats"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/search": {
+            "get": {
+                "summary": "Search companies and roles",
+                "tags": [
+                    "Search"
+                ],
+                "parameters": [
+                    {
+                        "name": "q",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Search query"
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer",
+                            "default": 20,
+                            "maximum": 200
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Search results",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "query": {
+                                            "type": "string"
+                                        },
+                                        "results": {
+                                            "type": "object",
+                                            "properties": {
+                                                "companies": {
+                                                    "type": "array"
+                                                },
+                                                "roles": {
+                                                    "type": "array"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/taxonomies/roles": {
+            "get": {
+                "summary": "List standardized roles",
+                "tags": [
+                    "Taxonomies"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Array of role strings",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/taxonomies/cities": {
+            "get": {
+                "summary": "List cities",
+                "tags": [
+                    "Taxonomies"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Array of city strings"
+                    }
+                }
+            }
+        },
+        "/api/v1/taxonomies/industries": {
+            "get": {
+                "summary": "List industries",
+                "tags": [
+                    "Taxonomies"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Array of industry strings"
+                    }
+                }
+            }
+        },
+        "/api/v1/taxonomies/macro-industries": {
+            "get": {
+                "summary": "List macro industries",
+                "tags": [
+                    "Taxonomies"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Array of macro industry strings"
+                    }
+                }
+            }
+        },
+        "/api/v1/taxonomies/seniority-levels": {
+            "get": {
+                "summary": "List seniority levels",
+                "tags": [
+                    "Taxonomies"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Array of seniority level strings"
+                    }
+                }
+            }
+        },
+        "/api/v1/taxonomies/education-levels": {
+            "get": {
+                "summary": "List education levels",
+                "tags": [
+                    "Taxonomies"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Array of education level strings"
+                    }
+                }
+            }
+        },
+        "/api/v1/taxonomies/company-size-tiers": {
+            "get": {
+                "summary": "List company size tiers",
+                "tags": [
+                    "Taxonomies"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Array of size tier strings"
+                    }
+                }
+            }
+        },
+        "/api/v1/companies": {
+            "get": {
+                "summary": "List companies",
+                "tags": [
+                    "Companies"
+                ],
+                "parameters": [
+                    {
+                        "name": "industry",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Search by English or Chinese name"
+                    },
+                    {
+                        "name": "size_tier",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "macro_industry",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "headquarters_city",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "ownership_type",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "per_page",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer",
+                            "default": 15,
+                            "maximum": 200
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Paginated list",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/companies/{id}": {
+            "get": {
+                "summary": "Get company detail",
+                "tags": [
+                    "Companies"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "fields",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Comma-separated field names to include"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Company detail",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/components/schemas/Company"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/companies/{id}/jobs": {
+            "get": {
+                "summary": "Get company job postings",
+                "tags": [
+                    "Companies"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "per_page",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer",
+                            "default": 50,
+                            "maximum": 200
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Paginated job listings"
+                    }
+                }
+            }
+        },
+        "/api/v1/companies/by-role": {
+            "get": {
+                "summary": "Find companies hiring for a given role",
+                "tags": [
+                    "Companies"
+                ],
+                "parameters": [
+                    {
+                        "name": "role",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "city",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "seniority",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "per_page",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer",
+                            "default": 50,
+                            "maximum": 200
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Companies ranked by job count"
+                    }
+                }
+            }
+        },
+        "/api/v1/salary-datapoints": {
+            "get": {
+                "summary": "List raw salary datapoints",
+                "tags": [
+                    "Salary Datapoints"
+                ],
+                "parameters": [
+                    {
+                        "name": "role",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "city",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "seniority",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "education_level",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "company_id",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "employment_type",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "equity_offered",
+                        "in": "query",
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "date_from",
+                        "in": "query",
+                        "schema": {
+                            "type": "string",
+                            "format": "date"
+                        }
+                    },
+                    {
+                        "name": "date_to",
+                        "in": "query",
+                        "schema": {
+                            "type": "string",
+                            "format": "date"
+                        }
+                    },
+                    {
+                        "name": "per_page",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer",
+                            "default": 50,
+                            "maximum": 200
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Paginated salary datapoints"
+                    }
+                }
+            }
+        },
+        "/api/v1/salary-datapoints/{id}": {
+            "get": {
+                "summary": "Get single salary datapoint",
+                "tags": [
+                    "Salary Datapoints"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Salary datapoint with company and skills"
+                    }
+                }
+            }
+        },
+        "/api/v1/salaries/market-summary": {
+            "get": {
+                "summary": "Get market salary summary for a role+city",
+                "tags": [
+                    "Salaries"
+                ],
+                "parameters": [
+                    {
+                        "name": "role",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "city",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Market summary with percentiles",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "role": {
+                                                    "type": "string"
+                                                },
+                                                "city": {
+                                                    "type": "string"
+                                                },
+                                                "data_point_count": {
+                                                    "type": "integer"
+                                                },
+                                                "percentiles": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "p25": {
+                                                            "type": "integer"
+                                                        },
+                                                        "p50": {
+                                                            "type": "integer"
+                                                        },
+                                                        "p75": {
+                                                            "type": "integer"
+                                                        },
+                                                        "p90": {
+                                                            "type": "integer"
+                                                        }
+                                                    }
+                                                },
+                                                "last_updated": {
+                                                    "type": "string",
+                                                    "format": "date-time"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                }
+            }
+        },
+        "/api/v1/salaries/all-in-cost": {
+            "get": {
+                "summary": "Calculate total all-in employer headcount cost in China (五险一金 + Bonus Multipliers)",
+                "description": "Calculates mandatory statutory social security (Pension 16%, Medical 6-10%, Housing Fund 5-12%, Unemployment 0.5%, Work Injury 0.2%) applied to municipal 60% floors and 300% statutory ceilings across 20+ Chinese cities.",
+                "tags": [
+                    "Salaries"
+                ],
+                "parameters": [
+                    {
+                        "name": "city",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Target Chinese city (e.g. Shanghai, Beijing, Shenzhen, Chengdu)"
+                    },
+                    {
+                        "name": "monthly_salary_cny",
+                        "in": "query",
+                        "schema": {
+                            "type": "number"
+                        },
+                        "description": "Gross monthly base salary in CNY. If omitted, role must be provided."
+                    },
+                    {
+                        "name": "role",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Standardized role to query market P50 if monthly_salary_cny is omitted."
+                    },
+                    {
+                        "name": "headcount",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer",
+                            "default": 1
+                        }
+                    },
+                    {
+                        "name": "bonus_months",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer",
+                            "default": 14
+                        }
+                    },
+                    {
+                        "name": "housing_fund_rate",
+                        "in": "query",
+                        "schema": {
+                            "type": "number"
+                        },
+                        "description": "Employer housing fund rate (e.g. 0.07 for 7%)"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Comprehensive all-in employer cost breakdown and statutory citation"
+                    }
+                }
+            }
+        },
+        "/api/v1/salaries/arbitrage": {
+            "get": {
+                "summary": "Cross-city compensation arbitrage and headcount budget differential",
+                "description": "Computes exact payroll savings, discount percentages, and engineering runway expansion between Tier-1 hubs and New Tier-1 expansion centers.",
+                "tags": [
+                    "Salaries"
+                ],
+                "parameters": [
+                    {
+                        "name": "role",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "baseline_city",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "target_city",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "headcount",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer",
+                            "default": 1
+                        }
+                    },
+                    {
+                        "name": "seniority",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Comparative arbitrage summary, net savings in CNY & USD, and equivalent headcount"
+                    }
+                }
+            }
+        },
+        "/api/v1/market-summaries": {
+            "get": {
+                "summary": "Get market summaries with percentiles",
+                "tags": [
+                    "Market Summaries"
+                ],
+                "parameters": [
+                    {
+                        "name": "role",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "city",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "seniority",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "education_level",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "industry",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "macro_industry",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "company_size",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "month",
+                        "in": "query",
+                        "schema": {
+                            "type": "string",
+                            "example": "2026-07"
+                        }
+                    },
+                    {
+                        "name": "per_page",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer",
+                            "default": 50,
+                            "maximum": 200
+                        }
+                    },
+                    {
+                        "name": "cursor",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Cursor for cursor-based pagination"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Cursor-paginated market summaries"
+                    },
+                    "429": {
+                        "$ref": "#/components/responses/QuotaExceeded"
+                    }
+                }
+            }
+        },
+        "/api/v1/market-summaries/trends": {
+            "get": {
+                "summary": "Get market summary time trends",
+                "tags": [
+                    "Market Summaries"
+                ],
+                "parameters": [
+                    {
+                        "name": "role",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "city",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "seniority",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "education_level",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "industry",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "macro_industry",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "company_size",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "per_page",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer",
+                            "default": 100,
+                            "maximum": 200
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Cursor-paginated chronological time series"
+                    }
+                }
+            }
+        },
+        "/api/v1/dataset-trends": {
+            "get": {
+                "summary": "Get weekly hiring frequency signals",
+                "tags": [
+                    "Dataset Trends"
+                ],
+                "parameters": [
+                    {
+                        "name": "role",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "city",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "company_id",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "week",
+                        "in": "query",
+                        "schema": {
+                            "type": "string",
+                            "example": "2026-31"
+                        }
+                    },
+                    {
+                        "name": "per_page",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer",
+                            "default": 50,
+                            "maximum": 200
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Cursor-paginated dataset trends with meta"
+                    }
+                }
+            }
+        },
+        "/api/v1/skill-demand": {
+            "get": {
+                "summary": "Get skills ranked by demand",
+                "tags": [
+                    "Skills"
+                ],
+                "parameters": [
+                    {
+                        "name": "role",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "city",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "category",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "skill",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Search by skill name"
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer",
+                            "default": 50,
+                            "maximum": 200
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Skills with posting counts and median salary"
+                    }
+                }
+            }
+        },
+        "/api/v1/export/latest": {
+            "get": {
+                "summary": "Bulk export market data",
+                "tags": [
+                    "Export"
+                ],
+                "parameters": [
+                    {
+                        "name": "month",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "after_id",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Resume from this ULID"
+                    },
+                    {
+                        "name": "format",
+                        "in": "query",
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "jsonl",
+                                "csv"
+                            ],
+                            "default": "jsonl"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "JSONL or CSV file stream",
+                        "content": {
+                            "application/x-ndjson": {
+                                "schema": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/Forbidden"
+                    }
+                }
+            },
+            "head": {
+                "summary": "Export metadata",
+                "tags": [
+                    "Export"
+                ],
+                "parameters": [
+                    {
+                        "name": "month",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Headers with X-Total-Count and X-Last-Updated"
+                    }
+                }
+            }
+        },
+        "/api/v1/mcp": {
+            "post": {
+                "summary": "Model Context Protocol (MCP) JSON-RPC 2.0 gateway",
+                "description": "Native MCP transport endpoint allowing AI agents (Claude, Cursor, OpenCode, Antigravity, etc.) to list and call tools dynamically.",
+                "tags": [
+                    "MCP"
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "jsonrpc": {
+                                        "type": "string",
+                                        "example": "2.0"
+                                    },
+                                    "id": {
+                                        "type": "string",
+                                        "example": "1"
+                                    },
+                                    "method": {
+                                        "type": "string",
+                                        "example": "tools/call"
+                                    },
+                                    "params": {
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "JSON-RPC 2.0 response object"
+                    },
+                    "400": {
+                        "description": "Invalid request missing method"
+                    }
+                }
+            }
+        },
+        "/api/v1/export/deletions": {
+            "get": {
+                "summary": "Get deletion audit feed",
+                "tags": [
+                    "Export"
+                ],
+                "parameters": [
+                    {
+                        "name": "since",
+                        "in": "query",
+                        "schema": {
+                            "type": "string",
+                            "format": "date-time"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Deletions list"
+                    }
+                }
+            }
+        },
+        "responses": {
+            "QuotaExceeded": {
+                "description": "Quota or rate limit exceeded",
+                "headers": {
+                    "X-Quota-Limit": {
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    "X-Quota-Remaining": {
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                },
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/ErrorQuotaExceeded"
+                        }
+                    }
+                }
+            },
+            "Forbidden": {
+                "description": "Forbidden",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/ErrorForbidden"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
