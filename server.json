@@ -1,0 +1,26 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-10-17/server.schema.json",
+  "name": "com.teamedupchina/intelligence-mcp",
+  "title": "TeamedUp Intelligence — China & APAC Salary Data",
+  "description": "China & APAC compensation benchmarks (P25/P50/P75/P90), China statutory employer cost (Wuxian Yijin / 五险一金), cross-city arbitrage, and employer intelligence across 319,000+ verified postings.",
+  "version": "1.1.0",
+  "websiteUrl": "https://intelligence.teamedupchina.com/docs/mcp",
+  "repository": {
+    "url": "https://github.com/bp46/teamedup-intelligence-mcp",
+    "source": "github"
+  },
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://intelligence.teamedupchina.com/api/v1/mcp",
+      "headers": [
+        {
+          "name": "Authorization",
+          "description": "Bearer API token from https://intelligence.teamedupchina.com/dashboard/api-keys (format: Bearer YOUR_API_KEY)",
+          "isRequired": true,
+          "isSecret": true
+        }
+      ]
+    }
+  ]
+}

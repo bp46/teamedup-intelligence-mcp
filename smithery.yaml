@@ -1,0 +1,15 @@
+# Smithery configuration for TeamedUp Intelligence Remote MCP Server
+runtime: typescript
+startCommand:
+  type: http
+  configSchema:
+    type: object
+    required:
+      - apiKey
+    properties:
+      apiKey:
+        type: string
+        title: TeamedUp Intelligence API Key
+        description: Bearer token from https://intelligence.teamedupchina.com/dashboard/api-keys
+  exampleConfig:
+    apiKey: tu_live_your_api_key_here

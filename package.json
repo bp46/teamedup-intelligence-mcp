@@ -1,22 +1,35 @@
 {
   "name": "@teamedup/intelligence-mcp",
-  "version": "1.0.0",
-  "description": "Official MCP configuration, OpenAPI 3.0.3 spec, and SDK examples for TeamedUp Intelligence (China & APAC compensation and labor market data).",
+  "version": "1.1.0",
+  "description": "Official MCP server configuration, tool reference, OpenAPI 3.0.3 spec, and SDK examples for TeamedUp Intelligence (China & APAC salary benchmarks, statutory cost 五险一金, and labor market data).",
   "license": "MIT",
   "homepage": "https://intelligence.teamedupchina.com/docs/mcp",
   "repository": {
     "type": "git",
     "url": "https://github.com/bp46/teamedup-intelligence-mcp.git"
   },
+  "files": [
+    "README.md",
+    "server.json",
+    "smithery.yaml",
+    "openapi.json",
+    "openapi.yaml",
+    "docs/",
+    "examples/"
+  ],
   "keywords": [
     "mcp",
+    "mcp-server",
     "model-context-protocol",
-    "salary-data",
-    "compensation",
-    "china",
-    "apac",
+    "streamable-http",
+    "china-salary",
+    "china-compensation",
+    "apac-salaries",
+    "salary-benchmarks",
+    "wuxian-yijin",
     "labor-market",
     "hr-tech",
+    "ai-agents",
     "openapi"
   ]
 }
